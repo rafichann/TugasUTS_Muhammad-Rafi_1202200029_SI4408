@@ -4,11 +4,11 @@ namespace App\Http\Controllers\API;
 
 use App\Helpers\ApiFormatter;
 use App\Http\Controllers\Controller;
-use App\Models\logistik;
+use App\Models\mahasiswa;
 use Exception;
 use Illuminate\Http\Request;
 
-class logistikController extends Controller
+class mahasiswaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class logistikController extends Controller
      */
     public function index()
     {
-        $data = logistik::all();
+        $data = mahasiswa::all();
 
         if ($data) {
             return ApiFormatter::createApi(200, 'Success', $data);
@@ -36,24 +36,18 @@ class logistikController extends Controller
     {
         try {
             $request->validate([
-                'pengirim' => 'required',
-                'alamatpengirim' => 'required',
-                'barang' => 'required',
-                'jumlahbarang' => 'required',
-                'penerima' => 'required',
-                'alamatpenerima' => 'required',
+                'nama' => 'required',
+                'nim' => 'required',
+                'kelas' => 'required',
             ]);
 
-            $logistik = logistik::create([
-                'pengirim' => $request->pengirim,
-                'alamatpengirim' => $request->alamatpengirim,
-                'barang' => $request->barang,
-                'jumlahbarang' => $request->jumlahbarang,
-                'penerima' => $request->penerima,
-                'alamatpenerima' => $request->alamatpenerima
+            $mahasiswa = mahasiswa::create([
+                'nama' => $request->nama,
+                'nim' => $request->nim,
+                'kelas' => $request->kelas,
             ]);
 
-            $data = logistik::where('id', '=', $logistik->id)->get();
+            $data = mahasiswa::where('id', '=', $mahasiswa->id)->get();
 
             if ($data) {
                 return ApiFormatter::createApi(200, 'Success', $data);
@@ -73,7 +67,18 @@ class logistikController extends Controller
      */
     public function show($id)
     {
-        $data = logistik::where('id', '=', $id)->get();
+        $data = mahasiswa::where('id', '=', $id)->get();
+
+        if ($data) {
+            return ApiFormatter::createApi(200, 'Success', $data);
+        } else {
+            return ApiFormatter::createApi(400, 'Failed');
+        }
+    }
+
+    public function nim($nim)
+    {
+        $data = mahasiswa::where('nim', '=', $nim)->get();
 
         if ($data) {
             return ApiFormatter::createApi(200, 'Success', $data);
@@ -93,27 +98,21 @@ class logistikController extends Controller
     {
         try {
             $request->validate([
-                'pengirim' => 'required',
-                'alamatpengirim' => 'required',
-                'barang' => 'required',
-                'jumlahbarang' => 'required',
-                'penerima' => 'required',
-                'alamatpenerima' => 'required',
+                'nama' => 'required',
+                'nim' => 'required',
+                'kelas' => 'required',
             ]);
 
 
-            $logistik = logistik::findOrFail($id);
+            $mahasiswa = mahasswa::findOrFail($id);
 
-            $logistik->update([
-                'pengirim' => $request->pengirim,
-                'alamatpengirim' => $request->alamatpengirim,
-                'barang' => $request->barang,
-                'jumlahbarang' => $request->jumlahbarang,
-                'penerima' => $request->penerima,
-                'alamatpenerima' => $request->alamatpenerima
+            $mahasiswa->update([
+                'nama' => $request->nama,
+                'nim' => $request->nim,
+                'kelas' => $request->kelas,
             ]);
 
-            $data = logistik::where('id', '=', $logistik->id)->get();
+            $data = mahasiswa::where('id', '=', $mahasiswa->id)->get();
 
             if ($data) {
                 return ApiFormatter::createApi(200, 'Success', $data);
@@ -134,9 +133,9 @@ class logistikController extends Controller
     public function destroy($id)
     {
         try {
-            $logistik = logistik::findOrFail($id);
+            $mahasiswa = mahasiswa::findOrFail($id);
 
-            $data = $logistik->delete();
+            $data = $mahasiswa->delete();
 
             if ($data) {
                 return ApiFormatter::createApi(200, 'Success Destory data');

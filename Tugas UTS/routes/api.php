@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\API\logistikController;
+use App\Http\Controllers\API\mahasiswaController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,11 +19,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('logistik', [logistikController::class, 'index']);
-Route::post('logistik/input', [logistikController::class, 'input']);
-Route::get('logistik/show/{id}', [logistikController::class, 'show']);
-Route::post('logistik/update/{id}', [logistikController::class, 'update']);
-Route::get('logistik/destroy/{id}', [logistikController::class, 'destroy']);
-Route::post('user', [UserController::class, 'action']);
+Route::get('mahasiswa', [mahasiswaController::class, 'index']);
+Route::post('mahasiswa/input', [mahasiswaController::class, 'input']);
+Route::get('mahasiswa/show/{id}', [mahasiswaController::class, 'show']);
+Route::post('mahasiswa/update/{id}', [mahasiswaController::class, 'update']);
+Route::get('mahasiswa/destroy/{id}', [mahasiswaController::class, 'destroy']);
+Route::get('mahasiswa/nim/{nim}', [mahasiswaController::class, 'nim']);
 
 
